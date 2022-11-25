@@ -1,0 +1,13 @@
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+table, tr, td{
+    border: 2px solid blue;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: blue;
+    color: white;
+}
