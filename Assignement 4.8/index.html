@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>My Library</title>
+    <link href="index.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.20.4/babel.min.js" integrity="sha512-L3Pu13lcF5GNw8Xk/NThb/dtbjtUVWwIkdD+XKGrEyFOjDy+6UOL6BzeBRBxYKSu8y340J8Q7QNZEUuDu0Ud2g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script type="text/babel">
+      class Book {
+        constructor(title, author) {
+          this.title = title;
+          this.author = author;
+        }
+
+        toString() {
+          return `${this.title}, by ${this.author}`;
+        }
+      }
+
+      class Film {
+        constructor(name, genre, blurb) {
+          this.name = name;
+          this.genre = genre;
+          this.blurb = blurb;
+        }
+
+        toString() {
+          return `${this.name} [${this.genre}], ${this.blurb}`;
+        }
+      }
+
+      const books = [
+        new Book("Millennium", "Stieg Larsson"),
+        new Book("A Christmas Carol", "Charles Dickens"),
+        new Book("The Son", "Jo Nesbo"),
+      ];
+
+      const films = [
+        new Film("Airplane", "Comedy", "Classic plane spoof"),
+        new Film("Skyfall", "Adventure", "Bond spy yarn"),
+        new Film("Love Actually", "RomCom", " Hugh Grant playing Hugh Grant"),
+      ];
+
+      function ItemsList(props) {
+        const Elem = props.ordered ? "ol" : "ul";
+        return (<Elem>
+          {props.items.map((item, i) => <li key = {i}>{item.toString()}</li>)}
+        </Elem>)
+        
+      }
+
+      function Table(props) {
+        return (
+          <table>
+            <TableHead sampleObject = {props.items[0]}/>
+            <TableBody objects = {props.items}/>
+          </table>
+        );
+      }
+
+      function TableHead(props) {
+        return (
+          <thead>   
+            <TableRow data = {Object.keys(props.sampleObject)} head = {true}></TableRow>      
+       </thead>
+        );
+      }
+
+      function TableBody(props) {
+        return (
+        <tbody>
+          {props.objects.map((obj, i) => <TableRow key={i} data={Object.values(obj)} head={false}/>)}
+        </tbody>
+        );
+      }
+
+      function TableRow(props) {
+        const Elem = props.head ? "th" : "td";
+        return (
+          <tr>          
+          {props.data.map((d, i) => <Elem key = {i}>{d}</Elem>)}
+          </tr>
+        );
+      }
+
+      const library = <div>
+       <h1>My Library</h1>
+       <h2>Books list</h2>
+       <ItemsList items={books} ordered={true}></ItemsList>
+       <h2>Films list</h2>
+       <ItemsList items={films}/>
+       <h2>Books table</h2>
+       <Table items={books}/>
+       <h2>Films table</h2>
+       <Table items={films}/>
+        </div>
+
+     
+
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+
+      root.render(library);
+    </script>
+  </body>
+</html>
